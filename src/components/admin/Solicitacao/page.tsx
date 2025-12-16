@@ -19,6 +19,7 @@ pagamento (observações), string
 
 interface Solicitacao {
   cliente?: string;
+  telefone?: string;
   arquivo?: File;
   dataEncomenda?: string;
   valor?: number;
@@ -51,6 +52,7 @@ export default function Solicitacao() {
         }
         await addDoc(collection(db, "solicitacoes"), {
           cliente: solicitacao.cliente || "",
+          telefone: solicitacao.telefone || "",
           arquivoURL: arquivoURL,
           dataEncomenda: solicitacao.dataEncomenda || "",
           valor: solicitacao.valor || 0,
@@ -68,6 +70,7 @@ export default function Solicitacao() {
       }
       setSolicitacao({
         cliente: "",
+        telefone: "",
         arquivo: undefined,
         dataEncomenda: "",
         valor: 0,
@@ -82,25 +85,44 @@ export default function Solicitacao() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleForm}>
+    <div className={`${styles.container}`}>
+      <form onSubmit={handleForm} className={`${styles.form}`}>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="nomeSolicitacao">Nome</label>
+          <label htmlFor="nomeSolicitacao" className={`hidden`}>
+            Nome
+          </label>
           <input
             type="text"
             id="nomeSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Nome do Cliente`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, cliente: e.target.value })
             }
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="arquivoSolicitacao">Arquivo</label>
+          <label htmlFor="telefoneSolicitacao" className={`hidden`}>
+            Telefone
+          </label>
+          <input
+            type="text"
+            id="telefoneSolicitacao"
+            className={`${styles.input}`}
+            placeholder={`Telefone do Cliente`}
+            onChange={(e) =>
+              setSolicitacao({ ...solicitacao, telefone: e.target.value })
+            }
+          />
+        </div>
+        <div className={`${styles.form_control}`}>
+          <label htmlFor="arquivoSolicitacao" className={`${styles.labelFile}`}>
+            Arquivo
+          </label>
           <input
             type="file"
             id="arquivoSolicitacao"
-            className={`${styles.input}`}
+            className={`${styles.input} hidden`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, arquivo: e.target.files![0] })
             }
@@ -121,22 +143,28 @@ export default function Solicitacao() {
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="valorSolicitacao">Valor</label>
+          <label htmlFor="valorSolicitacao" className={`hidden`}>
+            Valor
+          </label>
           <input
             type="number"
             id="valorSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Valor`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, valor: Number(e.target.value) })
             }
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="tamanhoSolicitacao">Tamanho</label>
+          <label htmlFor="tamanhoSolicitacao" className={`hidden`}>
+            Tamanho
+          </label>
           <input
             type="number"
             id="tamanhoSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Tamanho`}
             onChange={(e) =>
               setSolicitacao({
                 ...solicitacao,
@@ -146,18 +174,21 @@ export default function Solicitacao() {
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="corSolicitacao">Cor</label>
+          <label htmlFor="corSolicitacao" className={`hidden`}>
+            Cor
+          </label>
           <input
             type="text"
             id="corSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Cor`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, cor: e.target.value })
             }
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="entregaSolicitacao">Entrega</label>
+          <label htmlFor="entregaSolicitacao">Data da Entrega</label>
           <input
             type="date"
             id="entregaSolicitacao"
@@ -168,39 +199,48 @@ export default function Solicitacao() {
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="statusSolicitacao">Status</label>
+          <label htmlFor="statusSolicitacao" className={`hidden`}>
+            Status
+          </label>
           <input
             type="text"
             id="statusSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Status`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, status: e.target.value })
             }
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="pagamentoSolicitacao">Pagamento</label>
+          <label htmlFor="pagamentoSolicitacao" className={`hidden`}>
+            Pagamento
+          </label>
           <input
             type="text"
             id="pagamentoSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Pagamento`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, pagamento: e.target.value })
             }
           />
         </div>
         <div className={`${styles.form_control}`}>
-          <label htmlFor="linkSolicitacao">Link</label>
+          <label htmlFor="linkSolicitacao" className={`hidden`}>
+            Link
+          </label>
           <input
             type="text"
             id="linkSolicitacao"
             className={`${styles.input}`}
+            placeholder={`Link do Modelo 3D`}
             onChange={(e) =>
               setSolicitacao({ ...solicitacao, link3d: e.target.value })
             }
           />
         </div>
-        <button type="submit" className={`${styles.button}`}>
+        <button type="submit" className={`${styles.buttonSubmit}`}>
           Enviar
         </button>
       </form>
